@@ -13,12 +13,15 @@ router.get("/usuarios", auth, adminController.usuarios);
 router.post("/usuarios/activate/:id", auth, adminController.activateUser);
 router.post("/usuarios/deactivate/:id", auth, adminController.deactivateUser);
 
-router.get("/administradores", auth, adminController.administradores);
-router.get("/administradores/create", auth, adminController.createAdminForm);
-router.post("/administradores/create", auth, adminController.createAdmin);
-router.get("/administradores/edit/:id", auth, adminController.editAdminForm);
-router.post("/administradores/edit/:id", auth, adminController.editAdmin);
-router.post("/administradores/activate/:id", auth, adminController.activateAdmin);
-router.post("/administradores/deactivate/:id", auth, adminController.deactivateAdmin);
+router.get("/usuarios", auth, adminController.getUsuarios);
+router.put("/usuarios/:id/activate", auth, adminController.activateUser);
+router.put("/usuarios/:id/deactivate", auth, adminController.deactivateUser);
+
+router.get("/administradores", auth, adminController.getAdministradores);
+router.post("/administradores", auth, adminController.createAdmin);
+router.put("/administradores/:id", auth, adminController.updateAdmin);
+router.put("/administradores/:id/activate", auth, adminController.activateAdmin);
+router.put("/administradores/:id/deactivate", auth, adminController.deactivateAdmin);
+
 
 module.exports = router;
