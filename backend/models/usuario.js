@@ -35,12 +35,6 @@ const Usuario = connection.define("usuario", {
         allowNull: false,
         unique: true
     },
-
-    rol:{
-        type: Sequelize.ENUM("Administrador", "Usuario"),
-        allowNull: false
-    },
-
     activo:{    
         type: Sequelize.BOOLEAN,
         defaultValue: false
@@ -49,9 +43,12 @@ const Usuario = connection.define("usuario", {
     fotoPerfil:{
         type: Sequelize.STRING,
         allowNull: true
+    },
+    isAdmin:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 });
-
 
 Usuario.associate = (models) => {
     Usuario.hasMany(models.Categoria, {
@@ -60,7 +57,5 @@ Usuario.associate = (models) => {
         as: "categorias"
     });
 };
-
-
 
 module.exports = Usuario;
