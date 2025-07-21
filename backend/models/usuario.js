@@ -8,17 +8,11 @@ const Usuario = connection.define("usuario", {
         allowNull: false,
         primaryKey: true
     },
-    
-    nombre:{
+    nombreUsuario:{
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
-
-    apellido:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-
     correo:{
         type: Sequelize.STRING,
         allowNull: false,
@@ -28,12 +22,6 @@ const Usuario = connection.define("usuario", {
     password:{
         type: Sequelize.STRING,
         allowNull: false
-    },
-
-    nombreUsuario:{
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
     },
     activo:{    
         type: Sequelize.BOOLEAN,
