@@ -6,12 +6,7 @@ const auth = require("../middleware/is-auth");
 
 router.get("/home", auth, adminController.home);
 
-router.get("/perfil/edit", auth, adminController.editPerfilForm);
-router.post("/perfil/edit", auth, adminController.editPerfil);
-
-router.get("/usuarios", auth, adminController.usuarios);
-router.post("/usuarios/activate/:id", auth, adminController.activateUser);
-router.post("/usuarios/deactivate/:id", auth, adminController.deactivateUser);
+router.put("/perfil", auth, adminController.updatePerfil);
 
 router.get("/usuarios", auth, adminController.getUsuarios);
 router.put("/usuarios/:id/activate", auth, adminController.activateUser);
@@ -22,6 +17,5 @@ router.post("/administradores", auth, adminController.createAdmin);
 router.put("/administradores/:id", auth, adminController.updateAdmin);
 router.put("/administradores/:id/activate", auth, adminController.activateAdmin);
 router.put("/administradores/:id/deactivate", auth, adminController.deactivateAdmin);
-
 
 module.exports = router;

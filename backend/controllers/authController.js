@@ -93,7 +93,7 @@ exports.register = async (req, res) => {
             activo: false
         });
 
-        const token = jwt.sign({ id: nuevoUsuario.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ id: nuevoUsuario.id }, process.env.SECRET, { expiresIn: "1h" });
 
         transporter.sendMail(
             {
@@ -130,7 +130,7 @@ exports.resetToken = async (req, res) => {
             return res.status(404).json({ error: "El correo no existe." });
         }
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: "1h" });
         const resetLink = `${req.protocol}://${req.get("host")}/new-password/${token}`;
 
         await transporter.sendMail({
@@ -178,15 +178,34 @@ exports.password = async (req, res) => {
         res.status(500).json({ error: "Error al restablecer contraseña. Intente más tarde." });
     }
 };
+
+exports.activateAccount = async (req, res) => {
+  const { token } = req.params;
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    const user = await Usuario.findOne({ where: { id: decoded.id } });
+
+    if (!user) {
+      return res.status(404).json({ error: "El usuario no existe." });
+    }
+
+    await Usuario.update({ activo: true }, { where: { id: decoded.id } });
+
+    req.session.isLoggedIn = true;
+    req.session.usuarioId = user.id;
+    req.session.isAdmin = user.isAdmin;
+
+    res.json({ message: "Cuenta activada exitosamente." });
+  } 
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al activar cuenta. Intente más tarde." });
+  }
+};
+
         
 
-/*
-
-TODO:
-
-ActivateAccount
-CheckSession
-*/
 
 
 

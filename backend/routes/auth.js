@@ -11,7 +11,5 @@ router.post("/reset-token", authController.resetToken);
 router.post("/new-password/:token", authController.password);
 
 router.get("/activate/:token", authController.activateAccount);
-router.get("/session", authController.checkSession); 
-
 
 module.exports = router;
